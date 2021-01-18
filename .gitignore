@@ -74,3 +74,5 @@ InitTestScene*.unity
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+omnisharp.json
+.vscode/
