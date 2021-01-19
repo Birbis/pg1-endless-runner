@@ -90,23 +90,15 @@ public class SwipeController : MonoBehaviour {
 		isDragging = false;
 	}
 	private void SwipeUp() {
-		if (onSwipeUp != null) {
-			onSwipeUp();
-		}
+		if (onSwipeUp != null) onSwipeUp();
 	}
 	private void SwipeDown() {
-		if (onSwipeDown != null) {
-			onSwipeDown();
-		}
+		if (onSwipeDown != null) onSwipeDown();
 	}
 	private void SwipeLeft() {
-		if (onSwipeLeft != null) {
-			onSwipeLeft();
-		}
+		if (onSwipeLeft != null) onSwipeLeft();
 	}
 	private void SwipeRight() {
-		if (onSwipeRight != null) {
-			onSwipeRight();
-		}
+		if (onSwipeRight != null) onSwipeRight();
 	}
 }

@@ -1,18 +1,30 @@
 ﻿using UnityEngine;
-
 public class PlayerController : MonoBehaviour {
-	// Start is called before the first frame update
+
+	[SerializeField,
+	Tooltip("The jump component, should be a sibling of this script")]
+	private Jump jump;
+
+	[SerializeField,
+	Tooltip("Needed for ground check")]
+	private GroundCheck groundCheck;
+
 	void Start() {
+		#region Events subscription
 		// Subscribe to swiping functionalities
 		SwipeController.Instance.onSwipeUp += OnSwipeUp;
 		SwipeController.Instance.onSwipeDown += OnSwipeDown;
 		SwipeController.Instance.onSwipeLeft += OnSwipeLeft;
 		SwipeController.Instance.onSwipeRight += OnSwipeRight;
+		#endregion
+
+		if (groundCheck == null) Debug.LogWarning("[PlayerController]::Start - GroundCheck not found");
 	}
 
-	// Update is called once per frame
 	private void OnSwipeUp() {
-		Debug.Log("Swiped Up");
+		if (groundCheck.isGrounded()) {
+			jump.execute();
+		}
 	}
 	private void OnSwipeDown() {
 		Debug.Log("Swiped Down");
