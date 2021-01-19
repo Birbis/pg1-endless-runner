@@ -10,13 +10,10 @@ public class Jump : MonoBehaviour, Move {
 	private float _jumpForce;
 
 	private Rigidbody _rb;
-	private float _gravity;
 
 	private void Start() {
 		_rb = GetComponent<Rigidbody>();
 		if (_rb == null) Debug.LogWarning("[Jump]::Start - RigidBody not found");
-
-		_gravity = GameManager.instance.Gravity;
 	}
 
 	public void execute() {
