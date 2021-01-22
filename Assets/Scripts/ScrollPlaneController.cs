@@ -23,6 +23,8 @@ public class ScrollPlaneController : MonoBehaviour {
 	[SerializeField,
 	Tooltip("Holds the initial tile, then the current tile the player is stepping on")]
 	private TileScriptableObject _currentTile;
+
+	private TileScriptableObject _nextTile;
 	private Dictionary<string, List<TileScriptableObject>> poolDictionary;
 
 	#endregion
@@ -64,59 +66,53 @@ public class ScrollPlaneController : MonoBehaviour {
 		}
 	}
 
-	private void FixedUpdate() {
+	private void Update() {
 		try {
-			if (_currentTile.length / 2 + _currentTile.sceneObj.transform.position.z <= _currentTile.maxDistance) {
-				Debug.Log("ciao");
-				Transform objTransform = _currentTile.sceneObj.transform;
-				Vector3 position = objTransform.position;
-				position.z += (_currentTile.length / 2) + (_currentTile.length / 2);
-				spawnFromPool("Test", position, objTransform.rotation);
+			if (_nextTile == null) {
+				if ((_currentTile.length / 2 + _currentTile.sceneObj.transform.position.z < _currentTile.maxDistance)) {
+					Transform objTransform = _currentTile.sceneObj.transform;
+					Vector3 position = objTransform.position;
+					position.z += (_currentTile.length / 2) + (_currentTile.length / 2);
+					// TODO: refactor the "Test" category. Needs to be the current game phase from the GameManager
+					Debug.Log("Spawning from pool...");
+					spawnFromPool("Test", position, objTransform.rotation);
+				}
+			} else {
+				if (Mathf.Abs(_currentTile.sceneObj.transform.position.z) >= _currentTile.length / 2) {
+					_currentTile.sceneObj.SetActive(false);
+					_currentTile = _nextTile;
+					_nextTile = null;
+				} else {
+					_nextTile.sceneObj.GetComponent<Rigidbody>().velocity = Vector3.back * _initialSpeed;
+				}
 			}
+			_currentTile.sceneObj.GetComponent<Rigidbody>().velocity = Vector3.back * _initialSpeed;
 		} catch (System.Exception e) {
 			Debug.LogError(e);
 		}
 	}
 
-	private GameObject spawnFromPool(string category, Vector3 position, Quaternion rotation) {
+	private void spawnFromPool(string category, Vector3 position, Quaternion rotation) {
 		if (!poolDictionary.ContainsKey(category)) {
 			Debug.LogWarning("Category " + category + " doesn't exist");
-			return null;
+			return;
 		}
+
 		try {
 			List<TileScriptableObject> pool = poolDictionary[category];
-			TileScriptableObject nextTileSO;
-			// TODO: check profiling performances
 			do {
 				// Fetches random object until it is different to the current one
-				nextTileSO = pool[Random.Range(0, pool.Count - 1)];
-			} while (GameObject.ReferenceEquals(nextTileSO.sceneObj, _currentTile.sceneObj));
-
-			GameObject objectToSpawn = nextTileSO.sceneObj;
-			StartCoroutine(DespawnTile(nextTileSO));
-			objectToSpawn = setTileAttributes(objectToSpawn, position, rotation);
-
-			return objectToSpawn;
+				_nextTile = pool[Random.Range(0, pool.Count - 1)];
+			} while (GameObject.ReferenceEquals(_nextTile.sceneObj, _currentTile.sceneObj));
+			setTileAttributes(_nextTile.sceneObj, position, rotation);
 		} catch (System.Exception e) {
 			Debug.LogError(e);
-			return null;
 		}
 	}
 
-	private GameObject setTileAttributes(GameObject obj, Vector3 position, Quaternion rotation) {
+	private void setTileAttributes(GameObject obj, Vector3 position, Quaternion rotation) {
 		obj.SetActive(true);
 		obj.transform.position = position;
 		obj.transform.rotation = rotation;
-		obj.GetComponent<Rigidbody>().velocity = Vector3.back * _initialSpeed;
-		return obj;
-	}
-
-	IEnumerator DespawnTile(TileScriptableObject nextTileSO) {
-		while (Mathf.Abs(_currentTile.sceneObj.transform.position.z) >= _currentTile.length / 2) {
-			yield return null;
-		}
-		// yield return new WaitUntil(() => Mathf.Abs(_currentTile.sceneObj.transform.position.z) >= _currentTile.length / 2);
-		_currentTile.sceneObj.SetActive(false);
-		_currentTile = nextTileSO;
 	}
 }

@@ -12,6 +12,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlaneBlack
       objectReference: {fileID: 0}
+    - target: {fileID: 536263423724841716, guid: 7cbbda98fa36f3245b13b0367980a8ca,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4900f4a3b225ef44388577d0a1774f18,
+        type: 2}
     - target: {fileID: 536263423724841717, guid: 7cbbda98fa36f3245b13b0367980a8ca,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
