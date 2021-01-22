@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tile", menuName = "ScriptableObjects/TileScriptableObject", order = 1)]
 public class TileScriptableObject : ScriptableObject {
@@ -25,4 +26,8 @@ public class TileScriptableObject : ScriptableObject {
 	[SerializeField,
 	Tooltip("The prefab of the tile that needs to be spawned")]
 	public GameObject tile;
+
+	[NonSerializedAttribute]
+	// Needed to store the scene object reference
+	public GameObject sceneObj;
 }

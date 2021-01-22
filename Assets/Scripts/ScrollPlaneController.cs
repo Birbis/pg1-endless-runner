@@ -1,6 +1,8 @@
-﻿using System.Security.Principal;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
 
 public class ScrollPlaneController : MonoBehaviour {
 
@@ -21,13 +23,10 @@ public class ScrollPlaneController : MonoBehaviour {
 	[SerializeField,
 	Tooltip("Holds the initial tile, then the current tile the player is stepping on")]
 	private TileScriptableObject _currentTile;
-
-	private GameObject _currentTileGO;
-
-	private Dictionary<string, List<GameObject>> poolDictionary;
+	private Dictionary<string, List<TileScriptableObject>> poolDictionary;
 
 	#endregion
-	// Start is called before the first frame update
+
 	private void Awake() {
 		#region Singleton
 		if (_instance != null && _instance != this) {
@@ -38,52 +37,86 @@ public class ScrollPlaneController : MonoBehaviour {
 		#endregion
 
 		if (_currentTile == null) Debug.LogWarning("[ScrollPlaneController]::Awake - Current tile not found");
-		else _currentTileGO = _currentTile.tile;
 		if (_tiles == null || _tiles.Count == 0) Debug.LogWarning("[ScrollPlaneController]::Awake - Tiles list is empty or null!");
 	}
 
 	private void Start() {
-		// Pool initialization
-		poolDictionary = new Dictionary<string, List<GameObject>>();
+		try {
 
-		foreach (TileScriptableObject tileSO in _tiles) {
-			if (!poolDictionary.ContainsKey(tileSO.category)) {
-				poolDictionary[tileSO.category] = new List<GameObject>();
+			// Pool initialization
+			poolDictionary = new Dictionary<string, List<TileScriptableObject>>();
+
+			foreach (TileScriptableObject tileSO in _tiles) {
+				if (!poolDictionary.ContainsKey(tileSO.category)) {
+					poolDictionary[tileSO.category] = new List<TileScriptableObject>();
+				}
+				tileSO.sceneObj = Instantiate(tileSO.tile);
+				tileSO.sceneObj.SetActive(false);
+				poolDictionary[tileSO.category].Add(tileSO);
 			}
-			GameObject obj = Instantiate(tileSO.tile);
-			obj.SetActive(false);
-			poolDictionary[tileSO.category].Add(obj);
+			// _currentTile is initialized in editor
+			_currentTile.sceneObj = Instantiate(_currentTile.tile);
+			_currentTile.sceneObj.SetActive(false);
+			poolDictionary[_currentTile.category].Add(_currentTile);
+			setTileAttributes(_currentTile.sceneObj, new Vector3(0, 0, 0), Quaternion.identity);
+		} catch (Exception e) {
+			Debug.LogError(e);
 		}
-		_currentTileGO = spawnFromPool("Test", new Vector3(0, 0, 0), Quaternion.identity);
 	}
 
 	private void FixedUpdate() {
-		if (_currentTile.length / 2 + _currentTileGO.transform.position.z <= _currentTile.maxDistance) {
-			Vector3 position = _currentTileGO.transform.position;
-			position.z += (_currentTile.length / 2) + (_currentTile.length / 2);
-			spawnFromPool("Test", position, _currentTileGO.transform.rotation);
+		try {
+			if (_currentTile.length / 2 + _currentTile.sceneObj.transform.position.z <= _currentTile.maxDistance) {
+				Debug.Log("ciao");
+				Transform objTransform = _currentTile.sceneObj.transform;
+				Vector3 position = objTransform.position;
+				position.z += (_currentTile.length / 2) + (_currentTile.length / 2);
+				spawnFromPool("Test", position, objTransform.rotation);
+			}
+		} catch (System.Exception e) {
+			Debug.LogError(e);
 		}
 	}
 
 	private GameObject spawnFromPool(string category, Vector3 position, Quaternion rotation) {
-
 		if (!poolDictionary.ContainsKey(category)) {
 			Debug.LogWarning("Category " + category + " doesn't exist");
 			return null;
 		}
+		try {
+			List<TileScriptableObject> pool = poolDictionary[category];
+			TileScriptableObject nextTileSO;
+			// TODO: check profiling performances
+			do {
+				// Fetches random object until it is different to the current one
+				nextTileSO = pool[Random.Range(0, pool.Count - 1)];
+			} while (GameObject.ReferenceEquals(nextTileSO.sceneObj, _currentTile.sceneObj));
 
-		// TODO: fix randomization with already fetched object
-		// Dequeues and sets active the object from the queue
-		List<GameObject> pool = poolDictionary[category];
-		GameObject objectToSpawn = pool[Random.Range(0, pool.Count)];
-		objectToSpawn.SetActive(true);
-		// _currentTileGO.SetActive(false); // * Is this good enough? Is this erased when it should be? Should it be later on?
+			GameObject objectToSpawn = nextTileSO.sceneObj;
+			StartCoroutine(DespawnTile(nextTileSO));
+			objectToSpawn = setTileAttributes(objectToSpawn, position, rotation);
 
-		objectToSpawn.transform.position = position;
-		objectToSpawn.transform.rotation = rotation;
-		objectToSpawn.GetComponent<Rigidbody>().velocity = Vector3.back * _initialSpeed;
+			return objectToSpawn;
+		} catch (System.Exception e) {
+			Debug.LogError(e);
+			return null;
+		}
+	}
 
-		// poolDictionary[category].Enqueue(_currentTileGO);
-		return objectToSpawn;
+	private GameObject setTileAttributes(GameObject obj, Vector3 position, Quaternion rotation) {
+		obj.SetActive(true);
+		obj.transform.position = position;
+		obj.transform.rotation = rotation;
+		obj.GetComponent<Rigidbody>().velocity = Vector3.back * _initialSpeed;
+		return obj;
+	}
+
+	IEnumerator DespawnTile(TileScriptableObject nextTileSO) {
+		while (Mathf.Abs(_currentTile.sceneObj.transform.position.z) >= _currentTile.length / 2) {
+			yield return null;
+		}
+		// yield return new WaitUntil(() => Mathf.Abs(_currentTile.sceneObj.transform.position.z) >= _currentTile.length / 2);
+		_currentTile.sceneObj.SetActive(false);
+		_currentTile = nextTileSO;
 	}
 }
