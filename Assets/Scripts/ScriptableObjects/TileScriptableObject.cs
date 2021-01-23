@@ -9,11 +9,6 @@ public class TileScriptableObject : ScriptableObject {
 	public string category;
 
 	[SerializeField,
-	Tooltip("The width of the tile, over which to distribute the 3 lanes"),
-	Range(1.0f, 300.0f)]
-	public float width;
-
-	[SerializeField,
 	Tooltip("The length of the tile"),
 	Range(1.0f, 300.0f)]
 	public float length;
