@@ -540,6 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1b504db1aa386468d16b00af53d246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadzone: 125
 --- !u!1 &1729816521
 GameObject:
   m_ObjectHideFlags: 0

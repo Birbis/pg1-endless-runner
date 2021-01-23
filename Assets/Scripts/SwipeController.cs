@@ -9,7 +9,11 @@ public class SwipeController : MonoBehaviour {
 	#region Private Variables
 	private bool isDragging = false;
 	private Vector2 startTouch, swipeDelta;
-	private const int DEADZONE = 125;
+
+	[SerializeField,
+	Tooltip("The max deadzone. Dragging with a delta distance less than the deadzone means no swipeDone"),
+	Range(80.0f, 200.0f)]
+	private int deadzone;
 	#endregion
 
 	#region Public Getters/Setters
@@ -67,7 +71,7 @@ public class SwipeController : MonoBehaviour {
 		}
 
 		// Check if deadzone has been crossed 
-		if (swipeDelta.magnitude > DEADZONE) {
+		if (swipeDelta.magnitude > deadzone) {
 			float x = swipeDelta.x;
 			float y = swipeDelta.y;
 
