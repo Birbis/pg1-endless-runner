@@ -26,6 +26,8 @@ public class ScrollPlaneController : MonoBehaviour {
 	private TileScriptableObject _nextTile;
 	private Dictionary<string, List<TileScriptableObject>> poolDictionary;
 
+	private bool _playing;
+
 	#endregion
 
 	private void Awake() {
@@ -39,9 +41,10 @@ public class ScrollPlaneController : MonoBehaviour {
 
 		if (_currentTile == null) Debug.LogWarning("[ScrollPlaneController]::Awake - Current tile not found");
 		if (_tiles == null || _tiles.Count == 0) Debug.LogWarning("[ScrollPlaneController]::Awake - Tiles list is empty or null!");
+		_playing = false;
 	}
 
-	private void Start() {
+	private void OnEnable() {
 		try {
 			#region Pool instantiation
 			// Pool initialization
@@ -67,33 +70,36 @@ public class ScrollPlaneController : MonoBehaviour {
 			#endregion
 
 			ScoreManager.Instance.StartScoreCounter = true;
+			_playing = true;
 		} catch (Exception e) {
 			Debug.LogError(e);
 		}
 	}
 
 	private void Update() {
-		try {
-			if (_nextTile == null) {
-				if ((_currentTile.length / 2 + _currentTile.sceneObj.transform.position.z < _currentTile.maxDistance)) {
-					Transform objTransform = _currentTile.sceneObj.transform;
-					Vector3 position = objTransform.position;
-					position.z += (_currentTile.length / 2) + (_currentTile.length / 2);
-					// TODO: refactor the "Test" category. Needs to be the current game phase from the GameManager
-					spawnFromPool("Test", position, objTransform.rotation);
-				}
-			} else {
-				if (Mathf.Abs(_currentTile.sceneObj.transform.position.z) >= _currentTile.length / 2) {
-					_currentTile.sceneObj.SetActive(false);
-					_currentTile = _nextTile;
-					_nextTile = null;
+		if (_playing) {
+			try {
+				if (_nextTile == null) {
+					if ((_currentTile.length / 2 + _currentTile.sceneObj.transform.position.z < _currentTile.maxDistance)) {
+						Transform objTransform = _currentTile.sceneObj.transform;
+						Vector3 position = objTransform.position;
+						position.z += (_currentTile.length / 2) + (_currentTile.length / 2);
+						// TODO: refactor the "Test" category. Needs to be the current game phase from the GameManager
+						spawnFromPool("Test", position, objTransform.rotation);
+					}
 				} else {
-					setTileVelocity(_nextTile.sceneObj.GetComponent<Rigidbody>());
+					if (Mathf.Abs(_currentTile.sceneObj.transform.position.z) >= _currentTile.length / 2) {
+						_currentTile.sceneObj.SetActive(false);
+						_currentTile = _nextTile;
+						_nextTile = null;
+					} else {
+						setTileVelocity(_nextTile.sceneObj.GetComponent<Rigidbody>());
+					}
 				}
+				setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
+			} catch (System.Exception e) {
+				Debug.LogError(e);
 			}
-			setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
-		} catch (System.Exception e) {
-			Debug.LogError(e);
 		}
 	}
 
@@ -123,5 +129,9 @@ public class ScrollPlaneController : MonoBehaviour {
 		obj.SetActive(true);
 		obj.transform.position = position;
 		obj.transform.rotation = rotation;
+	}
+
+	public void EnableScroller() {
+		gameObject.SetActive(true);
 	}
 }
