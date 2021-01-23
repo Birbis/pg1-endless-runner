@@ -17,8 +17,12 @@ public class Dodge : MonoBehaviour, Move {
 	void Start() {
 		_lanes = new Dictionary<string, GameObject>();
 		GameObject[] goLanes = GameObject.FindGameObjectsWithTag("Lane");
-		foreach (GameObject lane in goLanes) {
-			_lanes[lane.name] = lane;
+		if (goLanes != null && goLanes.Length != 0) {
+			foreach (GameObject lane in goLanes) {
+				_lanes[lane.name] = lane;
+			}
+		} else {
+			Debug.LogWarning("[Dodge]::Start - Something went wrong while fetching the lanes' gameobjects");
 		}
 
 		_currentLane = "Center";
@@ -61,8 +65,6 @@ public class Dodge : MonoBehaviour, Move {
 		if (temp != null && temp != _currentLane) {
 			_currentLane = temp;
 			_dodgingTransform = _lanes[_currentLane].transform;
-			// TODO: needs lerping, do not keep this as it is now.
-			// gameObject.transform.position = new Vector3(_dodgingTransform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
 		}
 	}
 
