@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
@@ -45,6 +44,7 @@ public class ScrollPlaneController : MonoBehaviour {
 	private void Start() {
 		try {
 
+			#region Pool instantiation
 			// Pool initialization
 			poolDictionary = new Dictionary<string, List<TileScriptableObject>>();
 
@@ -56,11 +56,16 @@ public class ScrollPlaneController : MonoBehaviour {
 				tileSO.sceneObj.SetActive(false);
 				poolDictionary[tileSO.category].Add(tileSO);
 			}
-			// _currentTile is initialized in editor
+			#endregion
+
+			#region Current Tile first instantiation
+			// * _currentTile is initialized in editor
 			_currentTile.sceneObj = Instantiate(_currentTile.tile);
 			_currentTile.sceneObj.SetActive(false);
+			_currentTile.sceneObj.GetComponent<Rigidbody>().velocity = Vector3.back * _initialSpeed;
 			poolDictionary[_currentTile.category].Add(_currentTile);
 			setTileAttributes(_currentTile.sceneObj, new Vector3(0, 0, 0), Quaternion.identity);
+			#endregion
 		} catch (Exception e) {
 			Debug.LogError(e);
 		}
@@ -74,7 +79,6 @@ public class ScrollPlaneController : MonoBehaviour {
 					Vector3 position = objTransform.position;
 					position.z += (_currentTile.length / 2) + (_currentTile.length / 2);
 					// TODO: refactor the "Test" category. Needs to be the current game phase from the GameManager
-					Debug.Log("Spawning from pool...");
 					spawnFromPool("Test", position, objTransform.rotation);
 				}
 			} else {
