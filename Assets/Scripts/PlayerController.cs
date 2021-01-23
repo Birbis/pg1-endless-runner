@@ -3,11 +3,14 @@ public class PlayerController : MonoBehaviour {
 
 	[SerializeField,
 	Tooltip("The jump component, should be a sibling of this script")]
-	private Jump jump;
+	private Jump _jump;
+	[SerializeField,
+	Tooltip("The dodge component, should be a sibling of this script")]
+	private Dodge _dodge;
 
 	[SerializeField,
 	Tooltip("Needed for ground check")]
-	private GroundCheck groundCheck;
+	private GroundCheck _groundCheck;
 
 	void Start() {
 		#region Events subscription
@@ -18,21 +21,21 @@ public class PlayerController : MonoBehaviour {
 		SwipeController.Instance.onSwipeRight += OnSwipeRight;
 		#endregion
 
-		if (groundCheck == null) Debug.LogWarning("[PlayerController]::Start - GroundCheck not found");
+		if (_groundCheck == null) Debug.LogWarning("[PlayerController]::Start - GroundCheck not found");
 	}
-
+	
 	private void OnSwipeUp() {
-		if (groundCheck.isGrounded()) {
-			jump.execute();
+		if (_groundCheck.isGrounded()) {
+			_jump.execute();
 		}
 	}
 	private void OnSwipeDown() {
 		Debug.Log("Swiped Down");
 	}
 	private void OnSwipeLeft() {
-		Debug.Log("Swiped Left");
+		_dodge.execute(goLeft: true);
 	}
 	private void OnSwipeRight() {
-		Debug.Log("Swiped Right");
+		_dodge.execute(goLeft: false);
 	}
 }
