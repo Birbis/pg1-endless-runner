@@ -43,7 +43,6 @@ public class ScrollPlaneController : MonoBehaviour {
 
 	private void Start() {
 		try {
-
 			#region Pool instantiation
 			// Pool initialization
 			poolDictionary = new Dictionary<string, List<TileScriptableObject>>();
@@ -66,6 +65,8 @@ public class ScrollPlaneController : MonoBehaviour {
 			poolDictionary[_currentTile.category].Add(_currentTile);
 			setTileAttributes(_currentTile.sceneObj, new Vector3(0, 0, 0), Quaternion.identity);
 			#endregion
+
+			ScoreManager.Instance.StartScoreCounter = true;
 		} catch (Exception e) {
 			Debug.LogError(e);
 		}
