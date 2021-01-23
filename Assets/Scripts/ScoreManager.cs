@@ -47,7 +47,7 @@ public class ScoreManager : MonoBehaviour {
 	void FixedUpdate() {
 		if (_startScoreCounter) {
 			_score += Time.deltaTime * _scorePerSecond;
-			_IUTextField.text = _scorePrefix + (int)_score + _scoreSuffix;
+			_IUTextField.text = _scorePrefix + " " + (int)_score + " " + _scoreSuffix;
 			// Debug.Log(_scorePrefix + (int)_score + _scoreSuffix);
 		}
 	}
