@@ -44,7 +44,7 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update() {
+	void FixedUpdate() {
 		if (_startScoreCounter) {
 			_score += Time.deltaTime * _scorePerSecond;
 			_IUTextField.text = _scorePrefix + (int)_score + _scoreSuffix;
