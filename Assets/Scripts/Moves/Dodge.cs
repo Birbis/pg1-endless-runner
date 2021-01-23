@@ -8,7 +8,10 @@ public class Dodge : MonoBehaviour, Move {
 	private string _currentLane;
 	private bool _freezed;
 	private Transform _dodgingTransform;
-	private float _dodgingSpeed = 10.0f;
+	[SerializeField,
+	Tooltip("The lerping speed for the dodge (should be proportional to the animation of the dodge, if any)\nDefaults to 1.5"),
+	Range(1.0f, 20.0f)]
+	private float _dodgingSpeed;
 
 	// Start is called before the first frame update
 	void Start() {
@@ -19,19 +22,21 @@ public class Dodge : MonoBehaviour, Move {
 		}
 
 		_currentLane = "Center";
+		if (float.IsNaN(_dodgingSpeed)) _dodgingSpeed = 1.5f;
 
 		if (_lanes.Keys.Count != 3) Debug.LogWarning("[Dodge]::Start - Found a different amount of lanes");
 	}
 
-	// private void Update() {
-	// 	if (_dodgingTransform != null) {
-	// 		if (Vector3.SqrMagnitude(transform.position - _dodgingTransform.position) <= 0.0001) {
-	// 			transform.position = Vector3.Lerp(transform.position, _dodgingTransform.position, Time.deltaTime * _dodgingSpeed);
-	// 		} else {
-	// 			_dodgingTransform = null;
-	// 		}
-	// 	}
-	// }
+	private void Update() {
+		if (_dodgingTransform != null) {
+			if (Vector3.SqrMagnitude(transform.position - _dodgingTransform.position) > 0.0001) {
+				Vector3 pos = transform.position;
+				transform.position = Vector3.Lerp(pos, new Vector3(_dodgingTransform.position.x, pos.y, pos.z), Time.deltaTime * _dodgingSpeed);
+			} else {
+				_dodgingTransform = null;
+			}
+		}
+	}
 
 	public void execute(bool goLeft) {
 		string temp = null;
@@ -57,7 +62,7 @@ public class Dodge : MonoBehaviour, Move {
 			_currentLane = temp;
 			_dodgingTransform = _lanes[_currentLane].transform;
 			// TODO: needs lerping, do not keep this as it is now.
-			gameObject.transform.position = new Vector3(_dodgingTransform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+			// gameObject.transform.position = new Vector3(_dodgingTransform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
 		}
 	}
 
