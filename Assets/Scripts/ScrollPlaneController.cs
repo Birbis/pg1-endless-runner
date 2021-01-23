@@ -62,7 +62,7 @@ public class ScrollPlaneController : MonoBehaviour {
 			// * _currentTile is initialized in editor
 			_currentTile.sceneObj = Instantiate(_currentTile.tile);
 			_currentTile.sceneObj.SetActive(false);
-			_currentTile.sceneObj.GetComponent<Rigidbody>().velocity = Vector3.back * _initialSpeed;
+			setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
 			poolDictionary[_currentTile.category].Add(_currentTile);
 			setTileAttributes(_currentTile.sceneObj, new Vector3(0, 0, 0), Quaternion.identity);
 			#endregion
@@ -87,10 +87,10 @@ public class ScrollPlaneController : MonoBehaviour {
 					_currentTile = _nextTile;
 					_nextTile = null;
 				} else {
-					_nextTile.sceneObj.GetComponent<Rigidbody>().velocity = Vector3.back * _initialSpeed;
+					setTileVelocity(_nextTile.sceneObj.GetComponent<Rigidbody>());
 				}
 			}
-			_currentTile.sceneObj.GetComponent<Rigidbody>().velocity = Vector3.back * _initialSpeed;
+			setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
 		} catch (System.Exception e) {
 			Debug.LogError(e);
 		}
@@ -112,6 +112,10 @@ public class ScrollPlaneController : MonoBehaviour {
 		} catch (System.Exception e) {
 			Debug.LogError(e);
 		}
+	}
+
+	private void setTileVelocity(Rigidbody rb) {
+		rb.velocity = Vector3.back * _initialSpeed;
 	}
 
 	private void setTileAttributes(GameObject obj, Vector3 position, Quaternion rotation) {
