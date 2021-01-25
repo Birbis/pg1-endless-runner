@@ -25,9 +25,8 @@ public class ScrollPlaneController : MonoBehaviour {
 
 	private TileScriptableObject _nextTile;
 	private Dictionary<string, List<TileScriptableObject>> poolDictionary;
-
 	private bool _playing;
-
+	private string _currentStage;
 	#endregion
 
 	private void Awake() {
@@ -69,6 +68,11 @@ public class ScrollPlaneController : MonoBehaviour {
 			setTileAttributes(_currentTile.sceneObj, new Vector3(0, 0, 0), Quaternion.identity);
 			#endregion
 
+			#region Events subscription
+			// Subscribe to swiping functionalities
+			GameManager.Instance.onStageUpdate += OnStageUpdate;
+			#endregion
+
 			ScoreManager.Instance.StartScoreCounter = true;
 			_playing = true;
 		} catch (Exception e) {
@@ -84,8 +88,7 @@ public class ScrollPlaneController : MonoBehaviour {
 						Transform objTransform = _currentTile.sceneObj.transform;
 						Vector3 position = objTransform.position;
 						position.z += (_currentTile.length / 2) + (_currentTile.length / 2);
-						// TODO: refactor the "Test" category. Needs to be the current game phase from the GameManager
-						spawnFromPool("Test", position, objTransform.rotation);
+						spawnFromPool(_currentStage, position, objTransform.rotation);
 					}
 				} else {
 					if (Mathf.Abs(_currentTile.sceneObj.transform.position.z) >= _currentTile.length / 2) {
@@ -133,5 +136,9 @@ public class ScrollPlaneController : MonoBehaviour {
 
 	public void EnableScroller() {
 		gameObject.SetActive(true);
+	}
+
+	private void OnStageUpdate(string newStage) {
+		_currentStage = newStage;
 	}
 }

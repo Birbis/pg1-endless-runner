@@ -17,5 +17,6 @@ public class UIManager : MonoBehaviour {
 		_menuUI.SetActive(false);
 		_scrollController.EnableScroller();
 		_playerController.EnablePlayer();
+		GameManager.Instance.StartGame();
 	}
 }
