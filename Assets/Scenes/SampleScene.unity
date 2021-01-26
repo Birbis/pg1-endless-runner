@@ -929,7 +929,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1152,6 +1152,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d85ec68f9021e4b4589508c33cab8ad3, type: 2}
   _initialSpeed: 2.5
   _currentTile: {fileID: 11400000, guid: 1584159233b77fa4b973e09d5036638a, type: 2}
+  _minTilesAhead: 2
 --- !u!4 &1729816523
 Transform:
   m_ObjectHideFlags: 0

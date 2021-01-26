@@ -23,10 +23,17 @@ public class ScrollPlaneController : MonoBehaviour {
 	Tooltip("Holds the initial tile, then the current tile the player is stepping on")]
 	private TileScriptableObject _currentTile;
 
-	private TileScriptableObject _nextTile;
+	[SerializeField,
+	Tooltip("The minimum number of tiles ahead to constantly have "
+	+ "\nNB: Must never be equal to the number of objects inside the list of tiles!"),
+	Range(1, 10)]
+	private int _minTilesAhead;
+
+	private Queue<TileScriptableObject> _nextTiles;
 	private Dictionary<string, List<TileScriptableObject>> poolDictionary;
 	private bool _playing;
 	private string _currentStage;
+	private float _lengthOffset = 0;
 	#endregion
 
 	private void Awake() {
@@ -40,6 +47,7 @@ public class ScrollPlaneController : MonoBehaviour {
 
 		if (_currentTile == null) Debug.LogWarning("[ScrollPlaneController]::Awake - Current tile not found");
 		if (_tiles == null || _tiles.Count == 0) Debug.LogWarning("[ScrollPlaneController]::Awake - Tiles list is empty or null!");
+		if (float.IsNaN((float)_minTilesAhead)) Debug.LogWarning("[ScrollPlaneController]::Awake - Min Tiles Ahead has not been initialized!");
 		_playing = false;
 	}
 
@@ -48,6 +56,7 @@ public class ScrollPlaneController : MonoBehaviour {
 			#region Pool instantiation
 			// Pool initialization
 			poolDictionary = new Dictionary<string, List<TileScriptableObject>>();
+			_nextTiles = new Queue<TileScriptableObject>();
 
 			foreach (TileScriptableObject tileSO in _tiles) {
 				if (!poolDictionary.ContainsKey(tileSO.category)) {
@@ -69,7 +78,7 @@ public class ScrollPlaneController : MonoBehaviour {
 			#endregion
 
 			#region Events subscription
-			// Subscribe to swiping functionalities
+			// Subscribe to onStageUpdate functionality
 			GameManager.Instance.onStageUpdate += OnStageUpdate;
 			#endregion
 
@@ -83,20 +92,19 @@ public class ScrollPlaneController : MonoBehaviour {
 	private void Update() {
 		if (_playing) {
 			try {
-				if (_nextTile == null) {
+				if (_nextTiles.Count < _minTilesAhead) {
 					if ((_currentTile.length / 2 + _currentTile.sceneObj.transform.position.z < _currentTile.maxDistance)) {
-						Transform objTransform = _currentTile.sceneObj.transform;
-						Vector3 position = objTransform.position;
-						position.z += (_currentTile.length / 2) + (_currentTile.length / 2);
-						spawnFromPool(_currentStage, position, objTransform.rotation);
+						spawnFromPool(_currentStage);
 					}
 				} else {
 					if (Mathf.Abs(_currentTile.sceneObj.transform.position.z) >= _currentTile.length / 2) {
 						_currentTile.sceneObj.SetActive(false);
-						_currentTile = _nextTile;
-						_nextTile = null;
+						_currentTile = _nextTiles.Dequeue();
+						_lengthOffset -= _currentTile.length;
 					} else {
-						setTileVelocity(_nextTile.sceneObj.GetComponent<Rigidbody>());
+						foreach (TileScriptableObject tile in _nextTiles) {
+							setTileVelocity(tile.sceneObj.GetComponent<Rigidbody>());
+						}
 					}
 				}
 				setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
@@ -106,7 +114,7 @@ public class ScrollPlaneController : MonoBehaviour {
 		}
 	}
 
-	private void spawnFromPool(string category, Vector3 position, Quaternion rotation) {
+	private void spawnFromPool(string category) {
 		if (!poolDictionary.ContainsKey(category)) {
 			Debug.LogWarning("Category " + category + " doesn't exist");
 			return;
@@ -114,11 +122,24 @@ public class ScrollPlaneController : MonoBehaviour {
 
 		try {
 			List<TileScriptableObject> pool = poolDictionary[category];
+			// either the last tile in the queue or the current tile
+			TileScriptableObject lastTile = _nextTiles.Count == 0 ? _currentTile : (_nextTiles.Peek());
+			// object reference for the next picked tile
+			TileScriptableObject pickedTile;
 			do {
-				// Fetches random object until it is different to the current one
-				_nextTile = pool[Random.Range(0, pool.Count - 1)];
-			} while (GameObject.ReferenceEquals(_nextTile.sceneObj, _currentTile.sceneObj));
-			setTileAttributes(_nextTile.sceneObj, position, rotation);
+				// Fetches random object until it is different to the current one or it is contained in the queue
+				pickedTile = pool[Random.Range(0, pool.Count - 1)];
+			} while (_nextTiles.Contains(pickedTile) || GameObject.ReferenceEquals(pickedTile.sceneObj, _currentTile.sceneObj));
+
+			// Calculates the position for the tile to "spawn"
+			Transform objTransform = lastTile.sceneObj.transform;
+			Vector3 position = objTransform.position;
+			position.z += (_currentTile.length / 2) + _lengthOffset + (lastTile.length / 2);
+			setTileAttributes(pickedTile.sceneObj, position, objTransform.rotation);
+
+			// Enqueues the picked tile and adds the length, if necessary, to the needed offset
+			_nextTiles.Enqueue(pickedTile);
+			if (_nextTiles.Count > 1) _lengthOffset += pickedTile.length;
 		} catch (System.Exception e) {
 			Debug.LogError(e);
 		}
