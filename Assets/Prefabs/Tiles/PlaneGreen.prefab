@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1829334282535890831, guid: ad406871e6481014eae333834e8c2368,
         type: 3}
       propertyPath: m_Name
-      value: PlaneBlack
+      value: PlaneGreen
       objectReference: {fileID: 0}
     - target: {fileID: 1829334282535890833, guid: ad406871e6481014eae333834e8c2368,
         type: 3}
