@@ -19,7 +19,6 @@ public class FadeIn : MonoBehaviour {
 	public void TriggerFadeIn() {
 		if (_materials != null) {
 			foreach (Material mat in _materials) {
-				Debug.Log(Time.timeSinceLevelLoad);
 				mat.SetFloat("_TriggerTime", Time.timeSinceLevelLoad);
 			}
 		}
