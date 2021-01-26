@@ -132,6 +132,12 @@ public class ScrollPlaneController : MonoBehaviour {
 		obj.SetActive(true);
 		obj.transform.position = position;
 		obj.transform.rotation = rotation;
+		var renderer = obj.GetComponent<Renderer>();
+		if (renderer != null) {
+			foreach (Material mat in renderer.materials) {
+				mat.SetFloat("Vector1_910CB408", Time.timeSinceLevelLoad);
+			}
+		}
 	}
 
 	public void EnableScroller() {
