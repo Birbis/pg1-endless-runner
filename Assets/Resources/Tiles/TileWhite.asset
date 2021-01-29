@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0799c63b758431945a5070e3043b9ae3, type: 3}
   m_Name: TileWhite
   m_EditorClassIdentifier: 
-  category: Test
+  category: Egypt
   length: 10
   maxDistance: 5
   tile: {fileID: 5564289850983824535, guid: c614ac7a06ecb7d41a0aac6583f9fe48, type: 3}

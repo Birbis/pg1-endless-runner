@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
@@ -7,7 +6,6 @@ using Random = UnityEngine.Random;
 public class ScrollPlaneController : MonoBehaviour {
 
 	#region Variables
-
 	private static ScrollPlaneController _instance;
 	public static ScrollPlaneController Instance { get { return _instance; } }
 
@@ -15,6 +13,13 @@ public class ScrollPlaneController : MonoBehaviour {
 	Tooltip("The initial tiles speed"),
 	Range(1.0f, 20.0f)]
 	private float _initialSpeed;
+
+	public float speed {
+		get => _initialSpeed;
+		set {
+			_initialSpeed = value;
+		}
+	}
 
 	[SerializeField,
 	Tooltip("Holds the initial tile, then the current tile the player is stepping on")]
@@ -26,8 +31,12 @@ public class ScrollPlaneController : MonoBehaviour {
 	Range(1, 10)]
 	private int _minTilesAhead;
 
+	[SerializeField,
+	Tooltip("The minimum distance run per stage")]
+	private List<StageScriptableObject> _stages;
+
 	private Queue<TileScriptableObject> _nextTiles;
-	private Dictionary<string, Dictionary<int, List<TileScriptableObject>>> poolDictionary;
+	private Dictionary<string, Dictionary<int, List<TileScriptableObject>>> _poolDictionary;
 	private bool _playing;
 	private string _currentStage;
 	private float _lengthOffset = 0;
@@ -47,25 +56,31 @@ public class ScrollPlaneController : MonoBehaviour {
 		if (float.IsNaN((float)_minTilesAhead)) Debug.LogWarning("[ScrollPlaneController]::Awake - Min Tiles Ahead has not been initialized!");
 		_playing = false;
 	}
+
 	private void Start() {
-		#region Pool instantiation
-		// Pool initialization
-		poolDictionary = new Dictionary<string, Dictionary<int, List<TileScriptableObject>>>();
-		_nextTiles = new Queue<TileScriptableObject>();
+		#region Load Resources
 		TileScriptableObject[] resourcesTiles = Resources.LoadAll<TileScriptableObject>("Tiles");
 		if (resourcesTiles == null || resourcesTiles.Length == 0) Debug.LogWarning("[ScrollPlaneController]::Start - Tiles list is empty or null!");
+		_stages = new List<StageScriptableObject>(Resources.LoadAll<StageScriptableObject>("Stages"));
+		if (_stages == null || _stages.Count == 0) Debug.LogWarning("[ScrollPlaneController]::Start - Tiles list is empty or null!");
+		#endregion
+
+		#region Pool instantiation
+		// Pool initialization
+		_poolDictionary = new Dictionary<string, Dictionary<int, List<TileScriptableObject>>>();
+		_nextTiles = new Queue<TileScriptableObject>();
 
 		foreach (TileScriptableObject tileSO in resourcesTiles) {
-			if (!poolDictionary.ContainsKey(tileSO.category)) {
-				poolDictionary[tileSO.category] = new Dictionary<int, List<TileScriptableObject>>();
+			if (!_poolDictionary.ContainsKey(tileSO.category)) {
+				_poolDictionary[tileSO.category] = new Dictionary<int, List<TileScriptableObject>>();
 			}
 
-			if (!poolDictionary[tileSO.category].ContainsKey(tileSO.difficulty)) {
-				poolDictionary[tileSO.category][tileSO.difficulty] = new List<TileScriptableObject>();
+			if (!_poolDictionary[tileSO.category].ContainsKey(tileSO.difficulty)) {
+				_poolDictionary[tileSO.category][tileSO.difficulty] = new List<TileScriptableObject>();
 			}
 			tileSO.sceneObj = Instantiate(tileSO.tile);
 			tileSO.sceneObj.SetActive(false);
-			poolDictionary[tileSO.category][tileSO.difficulty].Add(tileSO);
+			_poolDictionary[tileSO.category][tileSO.difficulty].Add(tileSO);
 		}
 		#endregion
 
@@ -74,18 +89,17 @@ public class ScrollPlaneController : MonoBehaviour {
 		_currentTile.sceneObj = Instantiate(_currentTile.tile);
 		_currentTile.sceneObj.SetActive(false);
 		setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
-		// poolDictionary[_currentTile.category].Add(_currentTile);
 		setTileAttributes(_currentTile.sceneObj, _currentTile.sceneObj.transform.position, _currentTile.sceneObj.transform.rotation);
 		#endregion
 	}
 
 	private void OnEnable() {
 		try {
-
 			#region Events subscription
 			// Subscribe to onStageUpdate functionality
 			GameManager.Instance.onStageUpdate += OnStageUpdate;
 			GameManager.Instance.onDifficultyUpdate += OnDifficultyUpdate;
+			ScoreManager.Instance.onDistanceUpdate += OnDistanceUpdate;
 			#endregion
 
 			ScoreManager.Instance.StartScoreCounter = true;
@@ -121,13 +135,13 @@ public class ScrollPlaneController : MonoBehaviour {
 	}
 
 	private void spawnFromPool(string category) {
-		if (!poolDictionary.ContainsKey(category)) {
+		if (!_poolDictionary.ContainsKey(category)) {
 			Debug.LogWarning("Category " + category + " doesn't exist");
 			return;
 		}
 
 		try {
-			List<TileScriptableObject> pool = poolDictionary[category][_difficulty];
+			List<TileScriptableObject> pool = _poolDictionary[category][_difficulty];
 			// either the last tile in the queue or the current tile
 			TileScriptableObject lastTile = _nextTiles.Count == 0 ? _currentTile : (_nextTiles.Peek());
 			// object reference for the next picked tile
@@ -180,5 +194,22 @@ public class ScrollPlaneController : MonoBehaviour {
 
 	private void OnDifficultyUpdate(int newDifficulty) {
 		_difficulty = newDifficulty;
+	}
+
+	private void OnDistanceUpdate(float newDistance) {
+		StageScriptableObject newStage = null;
+		foreach (StageScriptableObject stage in _stages) {
+			if (stage.stageName == _currentStage) {
+				newStage = stage;
+				break;
+			}
+		}
+		if (newStage == null) {
+			Debug.LogError("[ScrollPlaneController]::OnDistanceUpdate - Stage Lengths does not contain stage " + _currentStage);
+			return;
+		} else if (newDistance >= newStage.length) {
+			_currentStage = newStage.stageName;
+			GameManager.Instance.stage = _currentStage;
+		}
 	}
 }

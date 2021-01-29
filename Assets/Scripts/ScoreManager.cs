@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour {
@@ -9,9 +10,19 @@ public class ScoreManager : MonoBehaviour {
 
 	public bool StartScoreCounter { set { _startScoreCounter = value; } }
 
-	private float _score;
+	private float _distance = 0;
+
+	public float distance {
+		get => _distance;
+		set {
+			_distance = value;
+			if (onDistanceUpdate != null) onDistanceUpdate(value);
+		}
+	}
 
 	private const float _scorePerSecond = 10;
+
+	private float _score = 0;
 
 	[SerializeField,
 	Tooltip("The text component that holds the UI score")]
@@ -20,6 +31,8 @@ public class ScoreManager : MonoBehaviour {
 	[SerializeField,
 	Tooltip("The score text prefix/suffix. Initialized to the empty string")]
 	private string _scorePrefix, _scoreSuffix;
+
+	public event Action<float> onDistanceUpdate;
 	#endregion
 
 	private void Awake() {
@@ -37,7 +50,6 @@ public class ScoreManager : MonoBehaviour {
 	private void Start() {
 		#region Variables initialization
 		// * init score to zero. Can it start with something else (powerups, etc...)?
-		_score = 0;
 		if (_scorePrefix == null) _scorePrefix = "";
 		if (_scoreSuffix == null) _scoreSuffix = "";
 		#endregion
@@ -46,9 +58,10 @@ public class ScoreManager : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate() {
 		if (_startScoreCounter) {
-			_score += Time.deltaTime * _scorePerSecond;
+			// TODO: wouldn't be bad to not retrieve EVERY time the speed
+			distance += Time.deltaTime * ScrollPlaneController.Instance.speed;
+			_score = distance * _scorePerSecond;
 			_IUTextField.text = _scorePrefix + " " + (int)_score + " " + _scoreSuffix;
-			// Debug.Log(_scorePrefix + (int)_score + _scoreSuffix);
 		}
 	}
 }

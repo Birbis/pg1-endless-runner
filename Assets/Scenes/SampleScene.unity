@@ -435,6 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c16f91e52153c40a8fa1d3ed414ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 5
   _IUTextField: {fileID: 2043596284}
   _scorePrefix: 
   _scoreSuffix: ' points'
@@ -657,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922a1855fdf88d347a0383681d5867a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stage: Test
+  stage: Egypt
   _difficulty: 1
 --- !u!4 &1143921519
 Transform:
@@ -1146,14 +1147,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1175e4183c6a7b147ae43d0bf951aa77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tiles:
-  - {fileID: 11400000, guid: 7af0ddbabe64c564e8f69c793b64461f, type: 2}
-  - {fileID: 11400000, guid: 7558a68f78d7ffa43acf24bf33d65f98, type: 2}
-  - {fileID: 11400000, guid: 724da7662f45ff746bce7ac44e285eaa, type: 2}
-  - {fileID: 11400000, guid: d85ec68f9021e4b4589508c33cab8ad3, type: 2}
   _initialSpeed: 2.5
   _currentTile: {fileID: 11400000, guid: 1584159233b77fa4b973e09d5036638a, type: 2}
   _minTilesAhead: 2
+  _stages:
+  - {fileID: 11400000, guid: 86f8e2b7481b707478ca633cfa25c83c, type: 2}
 --- !u!4 &1729816523
 Transform:
   m_ObjectHideFlags: 0
