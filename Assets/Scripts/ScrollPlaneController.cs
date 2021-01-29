@@ -74,7 +74,7 @@ public class ScrollPlaneController : MonoBehaviour {
 			_currentTile.sceneObj.SetActive(false);
 			setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
 			poolDictionary[_currentTile.category].Add(_currentTile);
-			setTileAttributes(_currentTile.sceneObj, new Vector3(0, 0, 0), Quaternion.identity);
+			setTileAttributes(_currentTile.sceneObj, _currentTile.sceneObj.transform.position, _currentTile.sceneObj.transform.rotation);
 			#endregion
 
 			#region Events subscription
@@ -134,8 +134,12 @@ public class ScrollPlaneController : MonoBehaviour {
 			// Calculates the position for the tile to "spawn"
 			Transform objTransform = lastTile.sceneObj.transform;
 			Vector3 position = objTransform.position;
+			Quaternion rotation = objTransform.rotation;
 			position.z += (_currentTile.length / 2) + _lengthOffset + (lastTile.length / 2);
-			setTileAttributes(pickedTile.sceneObj, position, objTransform.rotation);
+
+			// Randomizes rotation on the y axis
+			if (Random.value < 0.5f) rotation = Quaternion.Euler(rotation.eulerAngles + 180f * Vector3.up);
+			setTileAttributes(pickedTile.sceneObj, position, rotation);
 
 			// Enqueues the picked tile and adds the length, if necessary, to the needed offset
 			_nextTiles.Enqueue(pickedTile);
