@@ -658,6 +658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stage: Test
+  _difficulty: 1
 --- !u!4 &1143921519
 Transform:
   m_ObjectHideFlags: 0

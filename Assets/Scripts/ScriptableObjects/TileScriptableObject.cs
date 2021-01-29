@@ -22,6 +22,10 @@ public class TileScriptableObject : ScriptableObject {
 	Tooltip("The prefab of the tile that needs to be spawned")]
 	public GameObject tile;
 
+	[SerializeField,
+	Tooltip("The difficulty definition of the tile")]
+	public int difficulty;
+
 	[NonSerializedAttribute]
 	// Needed to store the scene object reference
 	public GameObject sceneObj;

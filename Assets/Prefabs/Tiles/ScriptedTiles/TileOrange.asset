@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TileOrange
   m_EditorClassIdentifier: 
   category: Test
-  width: 10
   length: 10
   maxDistance: 5
   tile: {fileID: 7715277946773469294, guid: 4726d7c11a1680545b652ee7000ba266, type: 3}
+  difficulty: 1

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TileWhite
   m_EditorClassIdentifier: 
   category: Test
-  width: 10
   length: 10
   maxDistance: 5
   tile: {fileID: 5564289850983824535, guid: c614ac7a06ecb7d41a0aac6583f9fe48, type: 3}
+  difficulty: 1

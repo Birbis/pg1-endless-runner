@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
@@ -30,10 +31,11 @@ public class ScrollPlaneController : MonoBehaviour {
 	private int _minTilesAhead;
 
 	private Queue<TileScriptableObject> _nextTiles;
-	private Dictionary<string, List<TileScriptableObject>> poolDictionary;
+	private Dictionary<string, Dictionary<int, List<TileScriptableObject>>> poolDictionary;
 	private bool _playing;
 	private string _currentStage;
 	private float _lengthOffset = 0;
+	private int _difficulty;
 	#endregion
 
 	private void Awake() {
@@ -55,16 +57,20 @@ public class ScrollPlaneController : MonoBehaviour {
 		try {
 			#region Pool instantiation
 			// Pool initialization
-			poolDictionary = new Dictionary<string, List<TileScriptableObject>>();
+			poolDictionary = new Dictionary<string, Dictionary<int, List<TileScriptableObject>>>();
 			_nextTiles = new Queue<TileScriptableObject>();
 
 			foreach (TileScriptableObject tileSO in _tiles) {
 				if (!poolDictionary.ContainsKey(tileSO.category)) {
-					poolDictionary[tileSO.category] = new List<TileScriptableObject>();
+					poolDictionary[tileSO.category] = new Dictionary<int, List<TileScriptableObject>>();
+				}
+
+				if (!poolDictionary[tileSO.category].ContainsKey(tileSO.difficulty)) {
+					poolDictionary[tileSO.category][tileSO.difficulty] = new List<TileScriptableObject>();
 				}
 				tileSO.sceneObj = Instantiate(tileSO.tile);
 				tileSO.sceneObj.SetActive(false);
-				poolDictionary[tileSO.category].Add(tileSO);
+				poolDictionary[tileSO.category][tileSO.difficulty].Add(tileSO);
 			}
 			#endregion
 
@@ -73,13 +79,14 @@ public class ScrollPlaneController : MonoBehaviour {
 			_currentTile.sceneObj = Instantiate(_currentTile.tile);
 			_currentTile.sceneObj.SetActive(false);
 			setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
-			poolDictionary[_currentTile.category].Add(_currentTile);
+			// poolDictionary[_currentTile.category].Add(_currentTile);
 			setTileAttributes(_currentTile.sceneObj, _currentTile.sceneObj.transform.position, _currentTile.sceneObj.transform.rotation);
 			#endregion
 
 			#region Events subscription
 			// Subscribe to onStageUpdate functionality
 			GameManager.Instance.onStageUpdate += OnStageUpdate;
+			GameManager.Instance.onDifficultyUpdate += OnDifficultyUpdate;
 			#endregion
 
 			ScoreManager.Instance.StartScoreCounter = true;
@@ -121,7 +128,7 @@ public class ScrollPlaneController : MonoBehaviour {
 		}
 
 		try {
-			List<TileScriptableObject> pool = poolDictionary[category];
+			List<TileScriptableObject> pool = poolDictionary[category][_difficulty];
 			// either the last tile in the queue or the current tile
 			TileScriptableObject lastTile = _nextTiles.Count == 0 ? _currentTile : (_nextTiles.Peek());
 			// object reference for the next picked tile
@@ -170,5 +177,9 @@ public class ScrollPlaneController : MonoBehaviour {
 
 	private void OnStageUpdate(string newStage) {
 		_currentStage = newStage;
+	}
+
+	private void OnDifficultyUpdate(int newDifficulty) {
+		_difficulty = newDifficulty;
 	}
 }

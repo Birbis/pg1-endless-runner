@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TileRed
   m_EditorClassIdentifier: 
   category: Test
-  width: 10
   length: 10
   maxDistance: 5
   tile: {fileID: 536263423724841707, guid: 7cbbda98fa36f3245b13b0367980a8ca, type: 3}
+  difficulty: 1

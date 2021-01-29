@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TileBlack
   m_EditorClassIdentifier: 
   category: Test
-  width: 10
   length: 10
   maxDistance: 5
   tile: {fileID: 1829334282535890831, guid: ad406871e6481014eae333834e8c2368, type: 3}
+  difficulty: 1
