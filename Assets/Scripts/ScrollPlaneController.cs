@@ -12,10 +12,6 @@ public class ScrollPlaneController : MonoBehaviour {
 	public static ScrollPlaneController Instance { get { return _instance; } }
 
 	[SerializeField,
-	Tooltip("This contains all the tiles to spawn")]
-	private List<TileScriptableObject> _tiles;
-
-	[SerializeField,
 	Tooltip("The initial tiles speed"),
 	Range(1.0f, 20.0f)]
 	private float _initialSpeed;
@@ -48,40 +44,43 @@ public class ScrollPlaneController : MonoBehaviour {
 		#endregion
 
 		if (_currentTile == null) Debug.LogWarning("[ScrollPlaneController]::Awake - Current tile not found");
-		if (_tiles == null || _tiles.Count == 0) Debug.LogWarning("[ScrollPlaneController]::Awake - Tiles list is empty or null!");
 		if (float.IsNaN((float)_minTilesAhead)) Debug.LogWarning("[ScrollPlaneController]::Awake - Min Tiles Ahead has not been initialized!");
 		_playing = false;
+	}
+	private void Start() {
+		#region Pool instantiation
+		// Pool initialization
+		poolDictionary = new Dictionary<string, Dictionary<int, List<TileScriptableObject>>>();
+		_nextTiles = new Queue<TileScriptableObject>();
+		TileScriptableObject[] resourcesTiles = Resources.LoadAll<TileScriptableObject>("Tiles");
+		if (resourcesTiles == null || resourcesTiles.Length == 0) Debug.LogWarning("[ScrollPlaneController]::Start - Tiles list is empty or null!");
+
+		foreach (TileScriptableObject tileSO in resourcesTiles) {
+			if (!poolDictionary.ContainsKey(tileSO.category)) {
+				poolDictionary[tileSO.category] = new Dictionary<int, List<TileScriptableObject>>();
+			}
+
+			if (!poolDictionary[tileSO.category].ContainsKey(tileSO.difficulty)) {
+				poolDictionary[tileSO.category][tileSO.difficulty] = new List<TileScriptableObject>();
+			}
+			tileSO.sceneObj = Instantiate(tileSO.tile);
+			tileSO.sceneObj.SetActive(false);
+			poolDictionary[tileSO.category][tileSO.difficulty].Add(tileSO);
+		}
+		#endregion
+
+		#region Current Tile first instantiation
+		// * _currentTile is initialized in editor
+		_currentTile.sceneObj = Instantiate(_currentTile.tile);
+		_currentTile.sceneObj.SetActive(false);
+		setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
+		// poolDictionary[_currentTile.category].Add(_currentTile);
+		setTileAttributes(_currentTile.sceneObj, _currentTile.sceneObj.transform.position, _currentTile.sceneObj.transform.rotation);
+		#endregion
 	}
 
 	private void OnEnable() {
 		try {
-			#region Pool instantiation
-			// Pool initialization
-			poolDictionary = new Dictionary<string, Dictionary<int, List<TileScriptableObject>>>();
-			_nextTiles = new Queue<TileScriptableObject>();
-
-			foreach (TileScriptableObject tileSO in _tiles) {
-				if (!poolDictionary.ContainsKey(tileSO.category)) {
-					poolDictionary[tileSO.category] = new Dictionary<int, List<TileScriptableObject>>();
-				}
-
-				if (!poolDictionary[tileSO.category].ContainsKey(tileSO.difficulty)) {
-					poolDictionary[tileSO.category][tileSO.difficulty] = new List<TileScriptableObject>();
-				}
-				tileSO.sceneObj = Instantiate(tileSO.tile);
-				tileSO.sceneObj.SetActive(false);
-				poolDictionary[tileSO.category][tileSO.difficulty].Add(tileSO);
-			}
-			#endregion
-
-			#region Current Tile first instantiation
-			// * _currentTile is initialized in editor
-			_currentTile.sceneObj = Instantiate(_currentTile.tile);
-			_currentTile.sceneObj.SetActive(false);
-			setTileVelocity(_currentTile.sceneObj.GetComponent<Rigidbody>());
-			// poolDictionary[_currentTile.category].Add(_currentTile);
-			setTileAttributes(_currentTile.sceneObj, _currentTile.sceneObj.transform.position, _currentTile.sceneObj.transform.rotation);
-			#endregion
 
 			#region Events subscription
 			// Subscribe to onStageUpdate functionality
