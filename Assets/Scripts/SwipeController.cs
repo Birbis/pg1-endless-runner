@@ -21,6 +21,7 @@ public class SwipeController : MonoBehaviour {
 	public event Action onSwipeDown;
 	public event Action onSwipeLeft;
 	public event Action onSwipeRight;
+	public event Action onTap;
 	#endregion
 
 	private void Awake() {
@@ -40,6 +41,12 @@ public class SwipeController : MonoBehaviour {
 			startTouch = Input.mousePosition;
 		} else if (Input.GetMouseButtonUp(0)) {
 			isDragging = false;
+
+			Vector2 delta = (Vector2)Input.mousePosition - startTouch;
+			if (Mathf.Abs(delta.x) == 0 && Mathf.Abs(delta.y) == 0) {
+				Tap();
+			}
+
 			Reset();
 		}
 
@@ -56,6 +63,12 @@ public class SwipeController : MonoBehaviour {
 			} else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled) {
 				// Consider both Ended and Canceled phases for resetting
 				isDragging = false;
+
+				Vector2 delta = Input.touches[0].position - touch.position;
+				if (Mathf.Abs(delta.x) == 0 && Mathf.Abs(delta.y) == 0) {
+					Tap();
+				}
+
 				Reset();
 			}
 		}
@@ -74,7 +87,6 @@ public class SwipeController : MonoBehaviour {
 		if (swipeDelta.magnitude > deadzone) {
 			float x = swipeDelta.x;
 			float y = swipeDelta.y;
-
 			if (Mathf.Abs(x) > Mathf.Abs(y)) {
 				// Left or right
 				if (x < 0) SwipeLeft();
@@ -104,5 +116,9 @@ public class SwipeController : MonoBehaviour {
 	}
 	private void SwipeRight() {
 		if (onSwipeRight != null) onSwipeRight();
+	}
+
+	private void Tap() {
+		if (onTap != null) onTap();
 	}
 }

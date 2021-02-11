@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using System;
+using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	private static PlayerController _instance;
@@ -32,18 +33,19 @@ public class PlayerController : MonoBehaviour {
 		SwipeController.Instance.onSwipeDown += OnSwipeDown;
 		SwipeController.Instance.onSwipeLeft += OnSwipeLeft;
 		SwipeController.Instance.onSwipeRight += OnSwipeRight;
+		SwipeController.Instance.onTap += OnTap;
 		#endregion
 
 		if (_groundCheck == null) Debug.LogWarning("[PlayerController]::Start - GroundCheck not found");
 	}
 
 	private void OnSwipeUp() {
-		if (_groundCheck.isGrounded()) {
-			_jump.execute();
-		}
+		Debug.Log("Swiped Up");
+		throw new NotImplementedException();
 	}
 	private void OnSwipeDown() {
 		Debug.Log("Swiped Down");
+		throw new NotImplementedException();
 	}
 	private void OnSwipeLeft() {
 		_dodge.execute(goLeft: true);
@@ -54,5 +56,9 @@ public class PlayerController : MonoBehaviour {
 
 	public void EnablePlayer() {
 		gameObject.SetActive(true);
+	}
+
+	public void OnTap() {
+		_jump.execute(_groundCheck.isGrounded());
 	}
 }
