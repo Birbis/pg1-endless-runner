@@ -25,7 +25,7 @@ PrefabInstance:
     - target: {fileID: 2005684298176449252, guid: ae3b0b7926f5ee3479ec2d7821e74272,
         type: 3}
       propertyPath: m_Name
-      value: Desert_Market_perk1_3
+      value: Desert_Market_Shield_3
       objectReference: {fileID: 0}
     - target: {fileID: 2005684298176449253, guid: ae3b0b7926f5ee3479ec2d7821e74272,
         type: 3}
@@ -81,6 +81,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3330864424343546956, guid: ae3b0b7926f5ee3479ec2d7821e74272,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3330864424343546957, guid: ae3b0b7926f5ee3479ec2d7821e74272,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae3b0b7926f5ee3479ec2d7821e74272, type: 3}
