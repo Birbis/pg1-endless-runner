@@ -7,10 +7,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1707631081486538702, guid: a4f07d51eb1543f44bd6de54192424b3,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 64.314766
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707631081486538702, guid: a4f07d51eb1543f44bd6de54192424b3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 12.601251
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707631081486538702, guid: a4f07d51eb1543f44bd6de54192424b3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707631081486538702, guid: a4f07d51eb1543f44bd6de54192424b3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707631081486538702, guid: a4f07d51eb1543f44bd6de54192424b3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 73.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969473190347860592, guid: a4f07d51eb1543f44bd6de54192424b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle_dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 6333071464875063170, guid: a4f07d51eb1543f44bd6de54192424b3,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6333071464875063171, guid: a4f07d51eb1543f44bd6de54192424b3,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7066027164119011626, guid: a4f07d51eb1543f44bd6de54192424b3,
         type: 3}
       propertyPath: m_Name
-      value: MarketPadre
+      value: Desert_Market_1
       objectReference: {fileID: 0}
     - target: {fileID: 7066027164119011627, guid: a4f07d51eb1543f44bd6de54192424b3,
         type: 3}
@@ -80,6 +120,11 @@ PrefabInstance:
     - target: {fileID: 7066027164305796055, guid: a4f07d51eb1543f44bd6de54192424b3,
         type: 3}
       propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710943299174372953, guid: a4f07d51eb1543f44bd6de54192424b3,
+        type: 3}
+      propertyPath: m_Icon
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []

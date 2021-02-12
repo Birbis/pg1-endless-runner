@@ -65,7 +65,12 @@ PrefabInstance:
     - target: {fileID: 224568111753066629, guid: 3a98e87c6d7894a4e81b402f817f42f7,
         type: 3}
       propertyPath: m_Name
-      value: Desert_Nile
+      value: Desert_Nile Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153328619631906054, guid: 3a98e87c6d7894a4e81b402f817f42f7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3959182182071836204, guid: 3a98e87c6d7894a4e81b402f817f42f7,
         type: 3}
@@ -81,6 +86,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6993943740073971514, guid: 3a98e87c6d7894a4e81b402f817f42f7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071530837666523528, guid: 3a98e87c6d7894a4e81b402f817f42f7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7589592962393206839, guid: 3a98e87c6d7894a4e81b402f817f42f7,
         type: 3}
