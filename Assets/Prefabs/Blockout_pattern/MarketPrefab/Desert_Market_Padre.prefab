@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 282096558494672154, guid: 8bc89e5484e1f7641bf891e0c43c06b3,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 282096558494672155, guid: 8bc89e5484e1f7641bf891e0c43c06b3,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3592484272291328467, guid: 8bc89e5484e1f7641bf891e0c43c06b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15,7 +25,7 @@ PrefabInstance:
     - target: {fileID: 3892853794017772466, guid: 8bc89e5484e1f7641bf891e0c43c06b3,
         type: 3}
       propertyPath: m_Name
-      value: MarketPadre
+      value: Desert_Market_Padre
       objectReference: {fileID: 0}
     - target: {fileID: 3892853794017772467, guid: 8bc89e5484e1f7641bf891e0c43c06b3,
         type: 3}
@@ -86,6 +96,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892853794816164191, guid: 8bc89e5484e1f7641bf891e0c43c06b3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bc89e5484e1f7641bf891e0c43c06b3, type: 3}
