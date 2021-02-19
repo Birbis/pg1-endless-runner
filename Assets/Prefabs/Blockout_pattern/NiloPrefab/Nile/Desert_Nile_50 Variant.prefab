@@ -7,6 +7,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1271794399095868270, guid: 751ed6c69a4e2634eb854b664b5739e2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308039362233714828, guid: 751ed6c69a4e2634eb854b664b5739e2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3370066188507491902, guid: 751ed6c69a4e2634eb854b664b5739e2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5536692040442435968, guid: 751ed6c69a4e2634eb854b664b5739e2,
         type: 3}
       propertyPath: m_RootOrder
@@ -65,12 +80,17 @@ PrefabInstance:
     - target: {fileID: 5536692040442435969, guid: 751ed6c69a4e2634eb854b664b5739e2,
         type: 3}
       propertyPath: m_Name
-      value: Desert_Nile_50
+      value: Desert_Nile_50 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5536692040442435969, guid: 751ed6c69a4e2634eb854b664b5739e2,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902586482751810562, guid: 751ed6c69a4e2634eb854b664b5739e2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8735378706154176296, guid: 751ed6c69a4e2634eb854b664b5739e2,
         type: 3}

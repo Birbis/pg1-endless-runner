@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6978692146608948455
+--- !u!1001 &7919953893543277168
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -30,12 +30,12 @@ PrefabInstance:
     - target: {fileID: 7847535094551963396, guid: c6409f01131d37e46a65edde855183b4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -165
+      value: -1541
       objectReference: {fileID: 0}
     - target: {fileID: 7847535094551963396, guid: c6409f01131d37e46a65edde855183b4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 179
+      value: 424
       objectReference: {fileID: 0}
     - target: {fileID: 7847535094551963396, guid: c6409f01131d37e46a65edde855183b4,
         type: 3}
@@ -80,7 +80,7 @@ PrefabInstance:
     - target: {fileID: 7847535094551963397, guid: c6409f01131d37e46a65edde855183b4,
         type: 3}
       propertyPath: m_Name
-      value: Desert_Nile_Shield_1
+      value: Desert_Nile_Shield_10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6409f01131d37e46a65edde855183b4, type: 3}
