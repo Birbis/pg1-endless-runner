@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Desert_Market_1
   m_EditorClassIdentifier: 
   category: 
-  length: 0
+  length: 100
   maxDistance: 0
   tile: {fileID: 8147938278735382773, guid: 56ed61d5c46890e41ae8f66143f6ea2c, type: 3}
   difficulty: 0
