@@ -25,16 +25,12 @@ public class Obstacle : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter(Collision other) {
-		if (!_shouldJustScare) {
-			if (other.gameObject.CompareTag("Player")) {
+		if (other.gameObject.CompareTag("Player")) {
+			if (_shouldJustScare) {
+				_pc.Scare(_ifScaredGoLeft);
+			} else {
 				_pc.Die(_isDefinitiveDeath);
 			}
-		}
-	}
-
-	public void ScarePlayer() {
-		if (_shouldJustScare) {
-			_pc.Scare(_ifScaredGoLeft);
 		}
 	}
 }
