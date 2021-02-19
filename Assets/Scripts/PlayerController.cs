@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 public class PlayerController : MonoBehaviour {
 
 	private static PlayerController _instance;
@@ -60,5 +62,18 @@ public class PlayerController : MonoBehaviour {
 
 	public void OnTap() {
 		_jump.execute(_groundCheck.isGrounded());
+	}
+
+	public void Die(bool dieDefinitevely) {
+		if (dieDefinitevely) {
+			// Reload the scene, might need refactoring once the menus are done and ready
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		} else {
+			// destroy the shield perk that it has
+		}
+	}
+
+	public void Scare(bool goLeft) {
+		_dodge.execute(goLeft: goLeft);
 	}
 }
