@@ -71,7 +71,7 @@ PrefabInstance:
     - target: {fileID: 224568111753066629, guid: 3a98e87c6d7894a4e81b402f817f42f7,
         type: 3}
       propertyPath: m_Name
-      value: Desert_Nile_Invincible
+      value: Desert_Nile_Invincible Variant
       objectReference: {fileID: 0}
     - target: {fileID: 224568111753066629, guid: 3a98e87c6d7894a4e81b402f817f42f7,
         type: 3}
@@ -92,6 +92,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4351623801438771914, guid: 3a98e87c6d7894a4e81b402f817f42f7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6993943740073971514, guid: 3a98e87c6d7894a4e81b402f817f42f7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071530837666523528, guid: 3a98e87c6d7894a4e81b402f817f42f7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a98e87c6d7894a4e81b402f817f42f7, type: 3}
