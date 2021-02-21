@@ -75,7 +75,7 @@ PrefabInstance:
     - target: {fileID: 1114824232099935311, guid: 17a4b7680169fda4f967c6fa41a4d063,
         type: 3}
       propertyPath: m_Name
-      value: Desert_Pyramid_Shield
+      value: Desert_Pyramid_Shield Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1114824232099935311, guid: 17a4b7680169fda4f967c6fa41a4d063,
         type: 3}
@@ -161,6 +161,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -24
+      objectReference: {fileID: 0}
+    - target: {fileID: 9110764853453056760, guid: 17a4b7680169fda4f967c6fa41a4d063,
+        type: 3}
+      propertyPath: m_Name
+      value: Walls Pyramid
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17a4b7680169fda4f967c6fa41a4d063, type: 3}
