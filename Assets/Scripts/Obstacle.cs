@@ -24,7 +24,7 @@ public class Obstacle : MonoBehaviour {
 		if (_pc == null) Debug.LogWarning("[ScareObstacle]::");
 	}
 
-	private void OnCollisionEnter(Collision other) {
+	private void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag("Player")) {
 			if (_shouldJustScare) {
 				_pc.Scare(_ifScaredGoLeft);
