@@ -1265,6 +1265,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -5.8770947
       objectReference: {fileID: 0}
+    - target: {fileID: 8147938278464424473, guid: f3a8b310a3669b24bb36531c79f4f33e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8147938278735382772, guid: f3a8b310a3669b24bb36531c79f4f33e,
         type: 3}
       propertyPath: m_RootOrder
@@ -1273,17 +1278,17 @@ PrefabInstance:
     - target: {fileID: 8147938278735382772, guid: f3a8b310a3669b24bb36531c79f4f33e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8147938278735382772, guid: f3a8b310a3669b24bb36531c79f4f33e,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8147938278735382772, guid: f3a8b310a3669b24bb36531c79f4f33e,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8147938278735382772, guid: f3a8b310a3669b24bb36531c79f4f33e,
         type: 3}
@@ -1339,12 +1344,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Icon
       value: 
-      objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000,
+      objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000,
         type: 0}
     - target: {fileID: 8147938278735382773, guid: f3a8b310a3669b24bb36531c79f4f33e,
         type: 3}
       propertyPath: m_Name
       value: Desert_Market_3 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8147938278735382773, guid: f3a8b310a3669b24bb36531c79f4f33e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8147938279037445268, guid: f3a8b310a3669b24bb36531c79f4f33e,
         type: 3}
