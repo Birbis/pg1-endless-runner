@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152527824000663815}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.2272, z: 60.50003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4485536508513743103}
@@ -1167,10 +1167,35 @@ PrefabInstance:
       propertyPath: m_Name
       value: Desert_Nile_Closing_1 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 957831900477976441, guid: 8a91b6781cafeac4493ca368fc040866,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 982288802855228141, guid: 8a91b6781cafeac4493ca368fc040866,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648404024875469184, guid: 8a91b6781cafeac4493ca368fc040866,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989077607709662361, guid: 8a91b6781cafeac4493ca368fc040866,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -36.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989077607709662361, guid: 8a91b6781cafeac4493ca368fc040866,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.2929
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989077607709662361, guid: 8a91b6781cafeac4493ca368fc040866,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 238.1
       objectReference: {fileID: 0}
     - target: {fileID: 3672075128649128660, guid: 8a91b6781cafeac4493ca368fc040866,
         type: 3}
