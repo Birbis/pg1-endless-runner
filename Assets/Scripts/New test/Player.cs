@@ -21,7 +21,7 @@ public class Player : MonoBehaviour {
 	private float _maxDoubleJumpVelocity = 5.0f;
 	private float _yVelocity = 0.0f;
 	private bool _jumpInput = false;
-	private bool _canDoubleJump = false;
+	private bool _canAirMove = false;
 	#endregion
 
 	#region Crouch variables
@@ -35,6 +35,14 @@ public class Player : MonoBehaviour {
 	private bool _canCrouch = true;
 	#endregion
 
+	#region Dash variables
+	[SerializeField]
+	private float _dashDuration = 1.0f;
+	[SerializeField]
+	private float _dashMultiplier = 2.0f;
+	private bool _dashInput = false;
+	private bool _isDashing = false;
+	#endregion
 
 
 	// Start is called before the first frame update
@@ -42,7 +50,7 @@ public class Player : MonoBehaviour {
 		_controller = GetComponent<CharacterController>();
 		#region Events subscription
 		// Subscribe to swiping functionalities
-		// SwipeController.Instance.onSwipeUp += OnSwipeUp;
+		SwipeController.Instance.onSwipeUp += OnSwipeUp;
 		SwipeController.Instance.onSwipeDown += OnSwipeDown;
 		// SwipeController.Instance.onSwipeLeft += OnSwipeLeft;
 		// SwipeController.Instance.onSwipeRight += OnSwipeRight;
@@ -52,49 +60,64 @@ public class Player : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		// * Specify direction to travel (Vector 3)
-		Vector3 direction = Vector3.forward;
-		// * Specify velocity to travel with (Vector 3) = direction * speed
-		Vector3 velocity = direction * _speed;
+		Vector3 velocity = Vector3.forward * _speed;
+		if (_isDashing) {
+			velocity *= _dashMultiplier;
+			Debug.Log(velocity);
+		}
 
-		// * Check for jumping
 		if (_controller.isGrounded) {
 			if (_jumpInput) {
 				_yVelocity = _jumpHeight;
 				_jumpInput = false;
+				_canAirMove = true;
 			}
 		} else {
-			// * Add gravity
 			_yVelocity -= _gravity;
-			if (Math.Abs(_yVelocity) <= _maxDoubleJumpVelocity) {
-				_canDoubleJump = true;
+			if (Math.Abs(_yVelocity) <= _maxDoubleJumpVelocity && _canAirMove) {
+				_canAirMove = true;
 			}
 
-			if (_canDoubleJump && _jumpInput) {
-				_yVelocity += _jumpHeight;
-				_jumpInput = false;
-				_canDoubleJump = false;
+			if (_canAirMove) {
+				if (_jumpInput) {
+					_yVelocity += _jumpHeight;
+					_jumpInput = false;
+					_canAirMove = false;
+				} else if (_dashInput) {
+					StartCoroutine("Dash");
+					_dashInput = false;
+					_canAirMove = false;
+				}
 			}
 		}
 
 		velocity.y = _yVelocity;
-		// * Move based on velocity * timeDelta
 		_controller.Move(velocity * Time.deltaTime);
 	}
 
 	private void OnTap() {
-		_jumpInput = true;
+		if (_controller.isGrounded || _canAirMove) {
+			_jumpInput = true;
+		}
 	}
-
+	private void OnSwipeUp() {
+		if (!_controller.isGrounded && _canAirMove) {
+			_dashInput = true;
+		}
+	}
 	private void OnSwipeDown() {
-		if (_canCrouch) {
+		if (_canCrouch && _controller.isGrounded) {
 			_canCrouch = false;
 			_originalControllerheight = _controller.height;
 			_controller.height = _crouchResize;
 			StartCoroutine("Crouch");
 		}
 	}
-
+	private IEnumerator Dash() {
+		_isDashing = true;
+		yield return new WaitForSeconds(_dashDuration);
+		_isDashing = false;
+	}
 	private IEnumerator Crouch() {
 		yield return new WaitForSeconds(_crouchDuration);
 		_controller.height = _originalControllerheight;
