@@ -63,7 +63,6 @@ public class Player : MonoBehaviour {
 		Vector3 velocity = Vector3.forward * _speed;
 		if (_isDashing) {
 			velocity *= _dashMultiplier;
-			Debug.Log(velocity);
 		}
 
 		if (_controller.isGrounded) {
