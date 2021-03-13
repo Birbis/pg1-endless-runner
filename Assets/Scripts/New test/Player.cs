@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -72,7 +72,8 @@ public class Player : MonoBehaviour {
 				_canAirMove = true;
 			}
 		} else {
-			_yVelocity -= _gravity;
+				if (!_isDashing) _yVelocity -= _gravity;
+				else _yVelocity = 0;
 			if (Math.Abs(_yVelocity) <= _maxDoubleJumpVelocity && _canAirMove) {
 				_canAirMove = true;
 			}
