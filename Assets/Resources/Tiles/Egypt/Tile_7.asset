@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0799c63b758431945a5070e3043b9ae3, type: 3}
-  m_Name: TileBlack
+  m_Name: Tile_7
   m_EditorClassIdentifier: 
-  category: Egypt
-  length: 10
-  maxDistance: 5
-  tile: {fileID: 1829334282535890831, guid: ad406871e6481014eae333834e8c2368, type: 3}
-  difficulty: 1
+  length: 200
+  maxDistance: 0
+  tile: {fileID: 8967623507771083640, guid: 2a8811a38ae53a24ba49a19ac05ec13e, type: 3}
+  difficulty: 0
+  isInitial: 0
+  isFinal: 0

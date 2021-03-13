@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0799c63b758431945a5070e3043b9ae3, type: 3}
-  m_Name: TileGreen
+  m_Name: Tile_1
   m_EditorClassIdentifier: 
-  category: Egypt
-  length: 10
-  maxDistance: 5
-  tile: {fileID: 6343850559040385031, guid: 1bc03654372910f48919bbb60d0ea051, type: 3}
-  difficulty: 1
+  length: 200
+  maxDistance: 0
+  tile: {fileID: 7101713376765327023, guid: 43ca0b32ef77ec542b7695b1aae87cd7, type: 3}
+  difficulty: 0
+  isInitial: 0
+  isFinal: 0

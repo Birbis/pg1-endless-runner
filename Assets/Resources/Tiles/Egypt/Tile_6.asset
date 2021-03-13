@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0799c63b758431945a5070e3043b9ae3, type: 3}
-  m_Name: Desert_Market_3
+  m_Name: Tile_6
   m_EditorClassIdentifier: 
-  category: Egypt
-  length: 100
-  maxDistance: 100
-  tile: {fileID: 1395122932686637383, guid: a4f05f21e3d8bcf4db1f5c797c02afe8, type: 3}
+  length: 200
+  maxDistance: 0
+  tile: {fileID: 2183807862045464764, guid: d77cee1a431a49c4ca6994e77c6ab634, type: 3}
   difficulty: 0
+  isInitial: 0
+  isFinal: 0

@@ -5,12 +5,7 @@ using UnityEngine;
 public class TileScriptableObject : ScriptableObject {
 
 	[SerializeField,
-	Tooltip("The category to which the tile belongs to")]
-	public string category;
-
-	[SerializeField,
-	Tooltip("The length of the tile"),
-	Range(1.0f, 300.0f)]
+	Tooltip("The length of the tile")]
 	public float length;
 
 	[SerializeField,
@@ -25,6 +20,14 @@ public class TileScriptableObject : ScriptableObject {
 	[SerializeField,
 	Tooltip("The difficulty definition of the tile")]
 	public int difficulty;
+
+	[SerializeField,
+	Tooltip("The difficulty definition of the tile")]
+	public bool isInitial;
+
+	[SerializeField,
+	Tooltip("The difficulty definition of the tile")]
+	public bool isFinal;
 
 	[NonSerializedAttribute]
 	// Needed to store the scene object reference
