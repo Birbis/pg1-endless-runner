@@ -174,7 +174,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1114824232099935310}
-  - component: {fileID: 4299648337281698051}
   - component: {fileID: 9208523377814709691}
   m_Layer: 0
   m_Name: Pyramid_padre
@@ -208,14 +207,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4299648337281698051
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114824232099935311}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &9208523377814709691
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -918,7 +909,6 @@ GameObject:
   - component: {fileID: 1114824233082951309}
   - component: {fileID: 1114824233082951310}
   - component: {fileID: 1114824233082951311}
-  - component: {fileID: 5190765286370491118}
   m_Layer: 8
   m_Name: FloorLane
   m_TagString: Untagged
@@ -1000,22 +990,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &5190765286370491118
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114824233082951297}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 118
-  m_CollisionDetection: 0
 --- !u!1 &1114824233312822973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,7 +1281,6 @@ GameObject:
   - component: {fileID: 1114824234051033366}
   - component: {fileID: 1114824234051033367}
   - component: {fileID: 1114824234051033320}
-  - component: {fileID: 572372040169040141}
   m_Layer: 8
   m_Name: FloorLane
   m_TagString: Untagged
@@ -1389,22 +1362,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &572372040169040141
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114824234051033322}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 118
-  m_CollisionDetection: 0
 --- !u!1 &1114824234149198364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,7 +1374,6 @@ GameObject:
   - component: {fileID: 1114824234149198360}
   - component: {fileID: 1114824234149198361}
   - component: {fileID: 1114824234149198362}
-  - component: {fileID: 7171363018989509474}
   m_Layer: 8
   m_Name: FloorLane
   m_TagString: Untagged
@@ -1499,22 +1455,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7171363018989509474
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114824234149198364}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 118
-  m_CollisionDetection: 0
 --- !u!1 &1156815791347301813
 GameObject:
   m_ObjectHideFlags: 0

@@ -131,6 +131,19 @@ Transform:
   m_Father: {fileID: 8805140835331309866}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1417997204760856010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182560618017378318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ee523eba63d0443b3d484189503fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _length: 0
 --- !u!1 &6201960614573509159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1043,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6398473682544381620, guid: db931e727b65d594ea32aea5b111d8d4,
+        type: 3}
+      propertyPath: _length
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 119507114464342334, guid: db931e727b65d594ea32aea5b111d8d4,
         type: 3}
       propertyPath: m_IsActive
@@ -1322,6 +1340,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db931e727b65d594ea32aea5b111d8d4, type: 3}
+--- !u!4 &3767312008743127156 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2292241196693585353, guid: db931e727b65d594ea32aea5b111d8d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 3136620212264990141}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8357363244538004594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6376203038721667535, guid: db931e727b65d594ea32aea5b111d8d4,
@@ -1334,9 +1358,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3136620212264990141}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &3767312008743127156 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2292241196693585353, guid: db931e727b65d594ea32aea5b111d8d4,
+--- !u!1 &5182560618017378318 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7812518412806497715, guid: db931e727b65d594ea32aea5b111d8d4,
     type: 3}
   m_PrefabInstance: {fileID: 3136620212264990141}
   m_PrefabAsset: {fileID: 0}

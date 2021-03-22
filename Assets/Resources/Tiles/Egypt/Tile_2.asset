@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8518100cceb12d946a964a3f140d2105, type: 3}
-  m_Name: Egypt
+  m_Script: {fileID: 11500000, guid: 0799c63b758431945a5070e3043b9ae3, type: 3}
+  m_Name: Tile_2
   m_EditorClassIdentifier: 
-  stageName: Egypt
-  length: 150
+  length: 200
+  maxDistance: 0
+  tile: {fileID: 2712189336800187379, guid: decdcec276ce24b4bac3c7ad12adfc76, type: 3}
+  difficulty: 0
+  isInitial: 0
+  isFinal: 0
